@@ -14,21 +14,5 @@ NOTEID_LIST_FILE=$(mktemp)
 echo "NOTEID_LIST_FILE: $NOTEID_LIST_FILE" 1>&2
 cat "$USERID_LIST_FILE"  \
     | xargs -I {} -P 4 -t sh -c 'sleep 1 && '"$POETRY"' run python3 src/fetchusernotes.py -u {} --host '"$MKHOST"' >> '"$NOTEID_LIST_FILE"
+
 "$POETRY" run python3 src/filternotes.py "$NOTEID_LIST_FILE" | xargs -I {} -P 4 echo "https://$MKHOST/notes/"{}
-        #"$POETRY"' run python3 src/fetchusernotes.py -u {} --host '"$MISSKEY_HOST"' | '"$POETRY"' run python3 -c '\''import sys,json; print(json.load(sys.stdin))'\'
-        #"$POETRY"' run python3 src/fetchusernotes.py -u {} --host '"$MISSKEY_HOST"
-#while read user; do
-#    echo "$user"
-#    $POETRY run python3 src/fetchusernotes.py \
-#        -u "$user" --host "$MISSKEY_HOST" \
-#        >> "$NOTEID_LIST_FILE"
-#    sleep 1
-#done < "$USERID_LIST_FILE"
-
-#while read note; do
-#    echo "https://$MISSKEY_HOST/notes/$NOTEID"
-#done < "$NOTEID_LIST_FILE"
-
-#rm "$NOTEID_LIST_FILE"
-#rm "$USERID_LIST_FILE"
-
